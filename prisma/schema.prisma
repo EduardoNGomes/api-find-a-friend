@@ -10,9 +10,68 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum StatesOptions {
+  acre
+  alagoas
+  amapa
+  amazonas
+  bahia
+  ceara
+  espirito_santo
+  goias
+  maranhao
+  mato_grosso
+  mato_grosso_do_sul
+  minas_gerais
+  para
+  paraiba
+  parana
+  pernambuco
+  piaui
+  rio_de_janeiro
+  rio_grande_do_norte
+  rio_grande_do_sul
+  rondonia
+  roraima
+  santa_catarina
+  sao_paulo
+  sergipe
+  tocantins
+}
+
+enum StateUF {
+  AC
+  AL
+  AP
+  AM
+  BA
+  CE
+  ES
+  GO
+  MA
+  MT
+  MS
+  MG
+  PA
+  PB
+  PR
+  PE
+  PI
+  RJ
+  RN
+  RS
+  RO
+  RR
+  SC
+  SP
+  SE
+  TO
+}
+
 model State {
-  id   String @id @default(uuid())
-  name String
+  id   String        @id @default(uuid())
+  name StatesOptions
+  uf   StateUF
   City City[]
 
   @@map("states")
