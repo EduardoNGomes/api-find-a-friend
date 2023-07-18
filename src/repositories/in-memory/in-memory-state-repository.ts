@@ -14,4 +14,14 @@ export class InMemoryStateRepository implements StatesRepository {
 
     return state
   }
+
+  async findById(id: string) {
+    const state = this.items.find((item) => item.id === id)
+
+    if (!state) {
+      return null
+    }
+
+    return state
+  }
 }

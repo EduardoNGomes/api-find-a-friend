@@ -1,3 +1,3 @@
-export class inMemoryStateRepository {
+export class InMemoryPetRepository {
   public items = []
 }

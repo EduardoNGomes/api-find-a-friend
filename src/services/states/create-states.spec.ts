@@ -1,15 +1,15 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { CreateStatesUseCase } from './create-states'
+import { CreateStatesService } from './create-states'
 import { InMemoryStateRepository } from '@/repositories/in-memory/in-memory-state-repository'
-import { InvalidDataEntryError } from '../errors/invalid-data-entry-error'
+import { InvalidDataEntryError } from '../@errors/invalid-data-entry-error'
 
 let inMemoryStateRepository: InMemoryStateRepository
-let sut: CreateStatesUseCase
+let sut: CreateStatesService
 
 describe('Create State Service', () => {
   beforeEach(async () => {
     inMemoryStateRepository = new InMemoryStateRepository()
-    sut = new CreateStatesUseCase(inMemoryStateRepository)
+    sut = new CreateStatesService(inMemoryStateRepository)
   })
 
   it('Should be able to create a new state', async () => {

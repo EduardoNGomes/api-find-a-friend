@@ -1,7 +1,7 @@
 import { StatesRepository } from '@/repositories/statesRepository'
 import { getUf } from '@/utils/selectUF'
 import { State } from '@prisma/client'
-import { InvalidDataEntryError } from '../errors/invalid-data-entry-error'
+import { InvalidDataEntryError } from '../@errors/invalid-data-entry-error'
 
 interface CreateStateRequest {
   name:
@@ -37,7 +37,7 @@ interface CreateStateResponse {
   state: State
 }
 
-export class CreateStatesUseCase {
+export class CreateStatesService {
   constructor(private statesRepository: StatesRepository) {}
 
   async execute({ name }: CreateStateRequest): Promise<CreateStateResponse> {

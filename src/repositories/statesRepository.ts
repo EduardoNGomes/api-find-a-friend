@@ -60,4 +60,5 @@ export interface StatesOptions {
 
 export interface StatesRepository {
   create(name: StatesOptions): Promise<State>
+  findById(id: string): Promise<State | null>
 }

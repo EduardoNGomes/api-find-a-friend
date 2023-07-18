@@ -1,3 +1,3 @@
-export class inMemoryOrganizationRepository {
+export class InMemoryOrganizationRepository {
   public items = []
 }
