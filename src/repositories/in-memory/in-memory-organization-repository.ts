@@ -1,12 +1,26 @@
 import { Organization, Prisma } from '@prisma/client'
-import { OrganizationsRepository } from '../organizationsRepository'
+import {
+  FindByEmailAndNameProps,
+  OrganizationsRepository,
+} from '../organizationsRepository'
 import { randomUUID } from 'crypto'
 
 export class InMemoryOrganizationRepository implements OrganizationsRepository {
   public items: Organization[] = []
 
-  async findByName(name: string) {
-    const organization = this.items.find((item) => item.name === name)
+  async findByEmail(email: string) {
+    const organization = this.items.find((item) => item.email === email)
+
+    if (organization) {
+      return organization
+    }
+    return null
+  }
+
+  async findByEmailAndName({ email, name }: FindByEmailAndNameProps) {
+    const organization = this.items.find(
+      (item) => item.email === email && item.name === name,
+    )
 
     if (organization) {
       return organization
@@ -20,7 +34,7 @@ export class InMemoryOrganizationRepository implements OrganizationsRepository {
     cep,
     email,
     number,
-    password,
+    password_hashed,
     phone,
     city_id,
   }: Prisma.OrganizationUncheckedCreateInput) {
@@ -32,7 +46,7 @@ export class InMemoryOrganizationRepository implements OrganizationsRepository {
       city_id,
       email,
       number,
-      password,
+      password_hashed,
       phone,
     }
     this.items.push(organization)

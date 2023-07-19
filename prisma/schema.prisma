@@ -91,13 +91,13 @@ model City {
 model Organization {
   id String @id @default(uuid())
 
-  name     String @unique
-  email    String @unique
-  cep      String
-  address  String
-  number   String
-  phone    String
-  password String
+  name            String @unique
+  email           String @unique
+  cep             String
+  address         String
+  number          String
+  phone           String
+  password_hashed String
 
   city    City   @relation(fields: [city_id], references: [id])
   city_id String
