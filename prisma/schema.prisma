@@ -120,17 +120,17 @@ model Pet {
   organization    Organization @relation(fields: [organization_id], references: [id])
   organization_id String
 
-  Requeriment Requeriment[]
+  Requirement Requirements[]
 
   @@map("pets")
 }
 
-model Requeriment {
+model Requirements {
   id   String @id @default(uuid())
   name String
 
   pet    Pet    @relation(fields: [pet_id], references: [id])
   pet_id String
 
-  @@map("requeriments")
+  @@map("requirements")
 }

@@ -1,12 +1,22 @@
 import { Organization, Prisma } from '@prisma/client'
 import {
   FindByEmailAndNameProps,
+  FindByIdProps,
   OrganizationsRepository,
 } from '../organizationsRepository'
 import { randomUUID } from 'crypto'
 
 export class InMemoryOrganizationRepository implements OrganizationsRepository {
   public items: Organization[] = []
+
+  async findById({ organization_id }: FindByIdProps) {
+    const organization = this.items.find((item) => item.id === organization_id)
+
+    if (organization) {
+      return organization
+    }
+    return null
+  }
 
   async findByEmail(email: string) {
     const organization = this.items.find((item) => item.email === email)

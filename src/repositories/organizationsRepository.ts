@@ -5,6 +5,10 @@ export interface FindByEmailAndNameProps {
   name: string
 }
 
+export interface FindByIdProps {
+  organization_id: string
+}
+
 export interface OrganizationsRepository {
   create({
     name,
@@ -21,5 +25,8 @@ export interface OrganizationsRepository {
     email,
     name,
   }: FindByEmailAndNameProps): Promise<Organization | null>
+
   findByEmail(email: string): Promise<Organization | null>
+
+  findById({ organization_id }: FindByIdProps): Promise<Organization | null>
 }
