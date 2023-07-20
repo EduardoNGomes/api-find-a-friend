@@ -1,5 +1,12 @@
 import { Pet, Prisma } from '@prisma/client'
 
+export interface SelectAllProps {
+  organizationId: string
+  page: number
+  searchType?: 'age' | 'energy' | 'height' | 'environment'
+  query?: string
+}
+
 export interface PetsRepository {
   create({
     age,
@@ -16,4 +23,6 @@ export interface PetsRepository {
   delete(pet_id: string): Promise<string>
 
   findById(id: string): Promise<Pet | null>
+
+  selectAllByOrg({ organizationId, page }: SelectAllProps): Promise<Pet[] | []>
 }

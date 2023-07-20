@@ -1,9 +1,27 @@
 import { Pet, Prisma } from '@prisma/client'
-import { PetsRepository } from '../petsRepository'
+import { PetsRepository, SelectAllProps } from '../petsRepository'
 import { randomUUID } from 'crypto'
 
 export class InMemoryPetRepository implements PetsRepository {
   public items: Pet[] = []
+
+  async selectAllByOrg({
+    organizationId,
+    page,
+    searchType,
+    query,
+  }: SelectAllProps) {
+    const pets = this.items
+      .filter((item) => item.organization_id === organizationId)
+      .filter((item) =>
+        searchType
+          ? item[searchType] === query
+          : item.organization_id === organizationId,
+      )
+      .slice((page - 1) * 20, page * 20)
+
+    return pets
+  }
 
   async create({
     age,
