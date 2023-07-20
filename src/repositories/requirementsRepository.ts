@@ -5,4 +5,6 @@ export interface RequirementsRepository {
     name,
     pet_id,
   }: Prisma.RequirementsUncheckedCreateInput): Promise<Requirements>
+
+  delete(pet_id: string): Promise<void>
 }

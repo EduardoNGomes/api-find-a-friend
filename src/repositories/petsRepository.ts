@@ -12,4 +12,8 @@ export interface PetsRepository {
     name,
     organization_id,
   }: Prisma.PetUncheckedCreateInput): Promise<Pet>
+
+  delete(pet_id: string): Promise<string>
+
+  findById(id: string): Promise<Pet | null>
 }

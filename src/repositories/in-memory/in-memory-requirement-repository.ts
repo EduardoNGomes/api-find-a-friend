@@ -15,4 +15,10 @@ export class InMemoryRequirementRepository implements RequirementsRepository {
 
     return requirement
   }
+
+  async delete(pet_id: string) {
+    const filteredItems = this.items.filter((item) => item.pet_id !== pet_id)
+
+    this.items = filteredItems
+  }
 }
