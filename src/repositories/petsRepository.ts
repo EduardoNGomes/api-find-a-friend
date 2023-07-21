@@ -20,8 +20,10 @@ export interface PetsRepository {
     organization_id,
   }: Prisma.PetUncheckedCreateInput): Promise<Pet>
 
+  // DELETE in CASCADE Requirements
   delete(pet_id: string): Promise<string>
 
+  // FIND pet with REQUIREMENTS
   findById(id: string): Promise<Pet | null>
 
   selectAllByOrg({ organizationId, page }: SelectAllProps): Promise<Pet[] | []>
