@@ -74,6 +74,7 @@ describe('Create Pet Service', () => {
       independence: 'Test indepence',
       name: 'Rita',
       organization_id: organizationTest.id,
+      city_id: cityTest.id,
       requirements: [''],
     })
 
@@ -91,6 +92,7 @@ describe('Create Pet Service', () => {
       name: 'Rita',
       organization_id: organizationTest.id,
       requirements: ['test 1', 'test 2', 'test 3'],
+      city_id: cityTest.id,
     })
 
     expect(inMemoryRequirementRepository.items).toHaveLength(3)
@@ -108,6 +110,7 @@ describe('Create Pet Service', () => {
         independence: 'Test indepence',
         name: 'Rita',
         organization_id: randomUUID(),
+        city_id: cityTest.id,
         requirements: ['test 1', 'test 2', 'test 3'],
       }),
     ).rejects.toBeInstanceOf(InvalidDataEntryError)

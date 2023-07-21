@@ -1,7 +1,13 @@
 import { Pet, Prisma } from '@prisma/client'
 
-export interface SelectAllProps {
+export interface selectAllByOrgProps {
   organizationId: string
+  page: number
+  searchType?: 'age' | 'energy' | 'height' | 'environment'
+  query?: string
+}
+export interface SelectAllByCityProps {
+  cityId: string
   page: number
   searchType?: 'age' | 'energy' | 'height' | 'environment'
   query?: string
@@ -18,6 +24,7 @@ export interface PetsRepository {
     independence,
     name,
     organization_id,
+    city_id,
   }: Prisma.PetUncheckedCreateInput): Promise<Pet>
 
   // DELETE in CASCADE Requirements
@@ -26,5 +33,17 @@ export interface PetsRepository {
   // FIND pet with REQUIREMENTS
   findById(id: string): Promise<Pet | null>
 
-  selectAllByOrg({ organizationId, page }: SelectAllProps): Promise<Pet[] | []>
+  selectAllByOrg({
+    organizationId,
+    page,
+    query,
+    searchType,
+  }: selectAllByOrgProps): Promise<Pet[] | []>
+
+  selectAllByCity({
+    cityId,
+    page,
+    query,
+    searchType,
+  }: SelectAllByCityProps): Promise<Pet[] | []>
 }

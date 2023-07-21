@@ -4,11 +4,10 @@ import { InMemoryCityRepository } from '@/repositories/in-memory/in-memory-city-
 import { City, Organization, State } from '@prisma/client'
 import { InMemoryOrganizationRepository } from '@/repositories/in-memory/in-memory-organization-repository'
 
-import { InvalidDataEntryError } from '../@errors/invalid-data-entry-error'
 import { hash } from 'bcryptjs'
 import { InMemoryPetRepository } from '@/repositories/in-memory/in-memory-pet-repository'
 import { randomUUID } from 'crypto'
-import { SelectAllPetsService } from './select-all-pets'
+import { SelectAllPetsByCityService } from './select-all-pets-by-city'
 
 let inMemoryCityRepository: InMemoryCityRepository
 let inMemoryStateRepository: InMemoryStateRepository
@@ -20,9 +19,9 @@ let stateTest: State
 let cityTest: City
 let organizationTest: Organization
 
-let sut: SelectAllPetsService
+let sut: SelectAllPetsByCityService
 
-describe('Select all Pet Service', () => {
+describe('Select all Pets by organization Service', () => {
   beforeEach(async () => {
     // MOCK
     inMemoryStateRepository = new InMemoryStateRepository()
@@ -31,10 +30,7 @@ describe('Select all Pet Service', () => {
 
     inMemoryPetRepository = new InMemoryPetRepository()
 
-    sut = new SelectAllPetsService(
-      inMemoryPetRepository,
-      inMemoryOrganizationRepository,
-    )
+    sut = new SelectAllPetsByCityService(inMemoryPetRepository)
 
     stateTest = await inMemoryStateRepository.create({
       name: 'rio_de_janeiro',
@@ -70,6 +66,7 @@ describe('Select all Pet Service', () => {
           independence: 'Test indepence',
           name: `Rita-${i}`,
           organization_id: organizationTest.id,
+          city_id: cityTest.id,
         })
       } else {
         await inMemoryPetRepository.create({
@@ -83,6 +80,7 @@ describe('Select all Pet Service', () => {
           independence: 'Test indepence',
           name: `Gabriel-${i}`,
           organization_id: organizationTest.id,
+          city_id: cityTest.id,
         })
       }
     }
@@ -90,7 +88,7 @@ describe('Select all Pet Service', () => {
 
   it('Should be able to select the first twenty pets', async () => {
     const { pets } = await sut.execute({
-      organizationId: organizationTest.id,
+      cityId: cityTest.id,
       page: 1,
     })
 
@@ -98,16 +96,18 @@ describe('Select all Pet Service', () => {
   })
   it('Should be able to select one pet ', async () => {
     const { pets } = await sut.execute({
-      organizationId: organizationTest.id,
+      cityId: cityTest.id,
+
       page: 2,
     })
 
-    expect(pets).toHaveLength(1)
     expect(pets).toEqual([expect.objectContaining({ name: 'Gabriel-21' })])
+    expect(pets).toHaveLength(1)
   })
   it('Should be able to create a new Pet in an organization with many requirements ', async () => {
     const { pets } = await sut.execute({
-      organizationId: organizationTest.id,
+      cityId: cityTest.id,
+
       page: 1,
       searchType: 'age',
       query: '1',
@@ -118,11 +118,13 @@ describe('Select all Pet Service', () => {
   })
 
   it('Shouldnt be able to authenticate a organization with wrong password', async () => {
-    await expect(async () =>
-      sut.execute({
-        organizationId: randomUUID(),
-        page: 1,
-      }),
-    ).rejects.toBeInstanceOf(InvalidDataEntryError)
+    const { pets } = await sut.execute({
+      cityId: randomUUID(),
+      page: 1,
+      searchType: 'age',
+      query: '1',
+    })
+
+    expect(pets).toEqual([])
   })
 })

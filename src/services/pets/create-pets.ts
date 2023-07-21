@@ -31,6 +31,7 @@ export class CreatePetsService {
     organization_id,
     id,
     requirements,
+    city_id,
   }: CreatePetsRequest): Promise<CreatePetsResponse> {
     const organization = await this.organizationsRepository.findById({
       organization_id,
@@ -51,6 +52,7 @@ export class CreatePetsService {
       name,
       organization_id,
       id,
+      city_id,
     })
 
     if (requirements) {

@@ -84,6 +84,7 @@ model City {
   state        State          @relation(fields: [state_id], references: [id])
   state_id     String
   Organization Organization[]
+  Pet          Pet[]
 
   @@map("cities")
 }
@@ -116,6 +117,9 @@ model Pet {
   independence String
   environment  String
   image        String
+
+  city    City   @relation(fields: [city_id], references: [id])
+  city_id String
 
   organization    Organization @relation(fields: [organization_id], references: [id])
   organization_id String

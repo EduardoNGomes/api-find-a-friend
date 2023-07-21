@@ -68,6 +68,7 @@ describe('Select unique Pet Service', () => {
       independence: 'Test indepence',
       name: 'Rita',
       organization_id: organizationTest.id,
+      city_id: cityTest.id,
     })
   })
 
