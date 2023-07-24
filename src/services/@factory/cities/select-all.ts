@@ -2,7 +2,7 @@ import { PrismaCityRepository } from '@/repositories/prisma/prisma-city-reposito
 import { PrismaStateRepository } from '@/repositories/prisma/prisma-state-repository'
 import { SelectAllCitiesService } from '@/services/cities/select-all'
 
-export function makeSelectAllService() {
+export function makeSelectAllCitiesService() {
   const citiesRepository = new PrismaCityRepository()
   const stateRepository = new PrismaStateRepository()
 
