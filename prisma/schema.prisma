@@ -81,7 +81,7 @@ model City {
   id   String @id @default(uuid())
   name String @unique
 
-  state        State          @relation(fields: [state_id], references: [id])
+  state        State          @relation(fields: [state_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   state_id     String
   Organization Organization[]
   Pet          Pet[]
@@ -100,7 +100,7 @@ model Organization {
   phone           String
   password_hashed String
 
-  city    City   @relation(fields: [city_id], references: [id])
+  city    City   @relation(fields: [city_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   city_id String
   Pet     Pet[]
 
@@ -118,10 +118,10 @@ model Pet {
   environment  String
   image        String
 
-  city    City   @relation(fields: [city_id], references: [id])
+  city    City   @relation(fields: [city_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   city_id String
 
-  organization    Organization @relation(fields: [organization_id], references: [id])
+  organization    Organization @relation(fields: [organization_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   organization_id String
 
   Requirement Requirements[]
@@ -133,7 +133,7 @@ model Requirements {
   id   String @id @default(uuid())
   name String
 
-  pet    Pet    @relation(fields: [pet_id], references: [id])
+  pet    Pet    @relation(fields: [pet_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   pet_id String
 
   @@map("requirements")

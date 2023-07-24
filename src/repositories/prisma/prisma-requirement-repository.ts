@@ -2,7 +2,7 @@ import { Prisma } from '@prisma/client'
 import { RequirementsRepository } from '../requirementsRepository'
 import { prisma } from '@/lib/prisma'
 
-export class InMemoryRequirementRepository implements RequirementsRepository {
+export class PrismaRequirementRepository implements RequirementsRepository {
   async create({ name, pet_id }: Prisma.RequirementsUncheckedCreateInput) {
     const requirement = await prisma.requirements.create({
       data: {

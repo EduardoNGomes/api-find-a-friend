@@ -6,7 +6,7 @@ import {
 } from '../petsRepository'
 import { prisma } from '@/lib/prisma'
 
-export class InMemoryPetRepository implements PetsRepository {
+export class PrismaPetRepository implements PetsRepository {
   async selectAllByOrg({
     organizationId,
     page,

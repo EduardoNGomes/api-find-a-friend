@@ -1,7 +1,7 @@
 import { StatesOptions, StatesRepository } from '../statesRepository'
 import { prisma } from '@/lib/prisma'
 
-export class InMemoryStateRepository implements StatesRepository {
+export class PrismaStateRepository implements StatesRepository {
   async create({ name, uf }: StatesOptions) {
     const state = await prisma.state.create({
       data: {

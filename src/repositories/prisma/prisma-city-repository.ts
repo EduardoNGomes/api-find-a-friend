@@ -2,7 +2,7 @@ import { Prisma } from '@prisma/client'
 import { CitiesRepository, SelectAllCitiesProps } from '../citiesRepository'
 import { prisma } from '@/lib/prisma'
 
-export class InMemoryCityRepository implements CitiesRepository {
+export class PrismaCityRepository implements CitiesRepository {
   async selectAll({ state_id }: SelectAllCitiesProps) {
     const cities = await prisma.city.findMany({ where: { state_id } })
 

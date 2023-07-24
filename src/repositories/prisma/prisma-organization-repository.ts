@@ -6,7 +6,7 @@ import {
 } from '../organizationsRepository'
 import { prisma } from '@/lib/prisma'
 
-export class InMemoryOrganizationRepository implements OrganizationsRepository {
+export class PrismaOrganizationRepository implements OrganizationsRepository {
   async findById({ organization_id }: FindByIdProps) {
     const organization = await prisma.organization.findUnique({
       where: {
