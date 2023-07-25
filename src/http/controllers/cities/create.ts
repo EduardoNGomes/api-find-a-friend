@@ -17,13 +17,12 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       name,
       state_id: stateId,
     })
+    return reply.status(201).send({
+      message: 'City created successfully',
+    })
   } catch (error) {
     if (error instanceof InvalidStateError) {
       return reply.status(409).send(error.message)
     }
   }
-
-  return reply.status(201).send({
-    message: 'City created successfully',
-  })
 }

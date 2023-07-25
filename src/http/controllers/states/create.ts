@@ -43,11 +43,10 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     await createService.execute({
       name,
     })
+    return reply.status(201).send({ message: 'State Created' })
   } catch (error) {
     if (error instanceof InvalidDataEntryError) {
       return reply.status(500).send({ message: error.message })
     }
   }
-
-  return reply.status(201).send({ message: 'State Created' })
 }

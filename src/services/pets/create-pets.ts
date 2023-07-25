@@ -29,7 +29,6 @@ export class CreatePetsService {
     independence,
     name,
     organization_id,
-    id,
     requirements,
     city_id,
   }: CreatePetsRequest): Promise<CreatePetsResponse> {
@@ -51,7 +50,6 @@ export class CreatePetsService {
       independence,
       name,
       organization_id,
-      id,
       city_id,
     })
 
