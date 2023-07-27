@@ -14,7 +14,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     independence: z.string(),
     name: z.string(),
     city_id: z.string(),
-    requirements: z.array(z.string()),
+    requirements: z.array(z.string()).optional(),
   })
 
   const {
@@ -29,12 +29,11 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     requirements,
   } = createPetBodySchema.parse(request.body)
 
-  const image = request.file.path
+  const image = request.file.filename
 
   const create = makeCreatePetService()
-
   try {
-    await create.execute({
+    const { pet } = await create.execute({
       age,
       description,
       energy,
@@ -44,11 +43,10 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       name,
       city_id,
       image,
-      organization_id: request.user.sub,
-      requirements,
+      organization_id: request.user.sign.sub,
+      requirements: requirements || undefined,
     })
-
-    return reply.status(201).send('Created is successful')
+    return reply.status(201).send({ pet })
   } catch (error) {
     if (error instanceof InvalidDataEntryError) {
       return reply.status(409).send({ message: error.message })

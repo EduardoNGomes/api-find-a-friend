@@ -6,17 +6,20 @@ export async function selectAllByCity(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const selectAllByOrgSchema = z.object({
+  const selectAllByOrgParamsSchema = z.object({
     cityId: z.string().uuid(),
-    page: z.coerce.number(),
-    searchType: z.enum(['age', 'energy', 'height', 'environment']).nullable(),
-    query: z.string().nullable(),
   })
 
-  const { cityId, page, query, searchType } = selectAllByOrgSchema.parse(
+  const selectAllByOrgBodySchema = z.object({
+    page: z.coerce.number(),
+    searchType: z.enum(['age', 'energy', 'height', 'environment']).optional(),
+    query: z.string().optional(),
+  })
+
+  const { cityId } = selectAllByOrgParamsSchema.parse(request.params)
+  const { page, query, searchType } = selectAllByOrgBodySchema.parse(
     request.body,
   )
-
   const selectAllByOrgs = makeSelectAllPetByCityService()
 
   try {

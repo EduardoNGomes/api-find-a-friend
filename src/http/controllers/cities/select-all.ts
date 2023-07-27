@@ -4,7 +4,6 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
 export async function selectAll(request: FastifyRequest, reply: FastifyReply) {
-  console.log(request.body)
   const createCityBodySchema = z.object({
     stateId: z.string().uuid(),
   })

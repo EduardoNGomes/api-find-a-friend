@@ -15,9 +15,9 @@ export async function petsRoutes(app: FastifyInstance) {
     create,
   )
 
-  app.delete('/pets', { onRequest: [verifyJwt] }, deletePet)
+  app.delete('/pets/:id', { onRequest: [verifyJwt] }, deletePet)
 
   app.get('/pets/:id', selectOne)
-  app.get('/pets/city', selectAllByCity)
-  app.get('/pets/org', selectAllByOrgs)
+  app.post('/pets/city/:cityId', selectAllByCity)
+  app.post('/pets/org/:organizationId', selectAllByOrgs)
 }

@@ -5,7 +5,7 @@ import { Pet, Prisma } from '@prisma/client'
 import { InvalidDataEntryError } from '../@errors/invalid-data-entry-error'
 
 interface CreatePetsRequest extends Prisma.PetUncheckedCreateInput {
-  requirements: string[]
+  requirements?: string[]
 }
 
 interface CreatePetsResponse {
@@ -54,12 +54,14 @@ export class CreatePetsService {
     })
 
     if (requirements) {
-      requirements.forEach(async (requirement) => {
-        await this.requirementsRepository.create({
-          name: requirement,
-          pet_id: pet.id,
-        })
-      })
+      await Promise.all(
+        requirements.map(async (requirement) => {
+          await this.requirementsRepository.create({
+            name: requirement,
+            pet_id: pet.id,
+          })
+        }),
+      )
     }
 
     return { pet }
